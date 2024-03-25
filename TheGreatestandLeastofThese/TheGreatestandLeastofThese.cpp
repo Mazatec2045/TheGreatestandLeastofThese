@@ -3,49 +3,52 @@
 //The Greatest and Least of These
 
 
+
 #include <iostream>
-#include <iomanip>
+#include <limits> 
 
 using namespace std;
 
 int main() {
+    // Variables
     int number;
-    int largest;
-    int smallest;
+    int largest = numeric_limits<int>::min(); // Sets 'largest' to the smallest possible integer
+    int smallest = numeric_limits<int>::max(); // Sets 'smallest' to the biggest possible integer
 
-    // User Input
+
+    // Prompt user for input
     cout << "Enter a number (-99 to quit): ";
-    cin >> number;
-
-    // End of series without entering numbers
-    if (number == -99) {
-        cout << "No valid numbers were entered." << endl;
-        return 1; // End the program early
-    }
-
-    // largest and smallest
-    largest = number;
-    smallest = number;
-
-    // Loop to continuously get an input  
-    while (number != -99) {
-        // Logic to find the largest
+    // Starts Loop for input
+    while (cin >> number) {
+        if (number == -99) {
+            break;
+        }
+        // Find/updates the biggest number
         if (number > largest) {
             largest = number;
         }
 
-        // Logic to find the smallest
+        // Find/updates the smallest number
         if (number < smallest) {
             smallest = number;
         }
 
-        // Get the next number from the user
-        cout << "Enter another number (-99 to quit): ";
-        cin >> number;
+        // Prompt for next Input 
+        cout << "Enter another number (-99 to quit): " ;
     }
 
-    // Displaying the results (outside the loop)
-    cout << "The largest number is: " << largest << endl;
+    // Non-intenger input validation 
+    if (cin.fail()) {
+        cin.clear();        // Clears the error that happened
+        cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Ignore the wrong stuff
+
+        // Display error message & Ends program 
+        cout << "\nInvalid input. Please enter only integers." << endl;
+        return 1;
+    }
+
+    // Results 
+    cout << "\nThe largest number is: " << largest << endl;
     cout << "The smallest number is: " << smallest << endl;
 
     return 0;
